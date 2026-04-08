@@ -96,4 +96,5 @@ public class DocumentDAO {
     public long count() {
         return documentRepository.count();
     }
+
 }
