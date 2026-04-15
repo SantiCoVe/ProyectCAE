@@ -7,20 +7,23 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "folders")
+@Table(name = "document_types")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
-public class FolderEntity {
+public class DocumentTypeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idType;
 
     private String name;
-    private String description;
-    private Boolean active;
+    private Boolean isGlobal;
+    private Boolean status;
 
+    private LocalDateTime createdDate;
+    private LocalDateTime updateDate;
 
+    @OneToMany(mappedBy = "type")
+    private List<DocumentEntity> documents;
 }

@@ -17,46 +17,46 @@ public class DocumentEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id_document")
+    private Long idDocument;
 
     private String title;
     private String description;
+
+    @Column(name = "file_path")
     private String filePath;
+
+    @Column(name = "file_type")
     private String fileType;
-    private Long documentSize;
-    private Boolean active;
 
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    private String status;
+    private String observation;
 
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    @Column(name = "created_date")
+    private LocalDateTime createdDate;
+
+    @Column(name = "updated_date")
+    private LocalDateTime updatedDate;
+
 
     // Automatic Timestamps
 
     @PrePersist
     public void prePersist() {
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
+        this.createdDate = LocalDateTime.now();
+        this.updatedDate = LocalDateTime.now();
     }
 
     @PreUpdate
     public void preUpdate() {
-        this.updatedAt = LocalDateTime.now();
+        this.updatedDate = LocalDateTime.now();
     }
 
-    // Relationship to the users table (user.id)
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private UserEntity createdBy;
-
-    // Relationship to the folder table (folder.id)
-    @ManyToOne
-    @JoinColumn(name = "folder_id", nullable = false)
+    @JoinColumn(name = "id_folder",nullable = false)
     private FolderEntity folder;
 
-    // Relationship to the document_types table (id)
     @ManyToOne
-    @JoinColumn(name = "document_type_id")
-    private DocumentTypeEntity documentType;
+    @JoinColumn(name = "id_type")
+    private DocumentTypeEntity type;
 }
