@@ -1,13 +1,13 @@
 package com.ProyectCAE.persistenceLayer.repository;
 
-import com.ProyectCAE.persistenceLayer.entity.DocumentEntity;
+import com.ProyectCAE.persistenceLayer.entity.DocumentTypeEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import java.util.List;
 
+public interface DocumentTypeRepository extends JpaRepository<DocumentTypeEntity, Long> {
 
-@Repository
-public interface DocumentTypeRepository extends JpaRepository<DocumentEntity, Long> {
+    List<DocumentTypeEntity> findByIsGlobalTrue();
 
-
+    List<DocumentTypeEntity> findByCreatedById(Long userId);
 
 }

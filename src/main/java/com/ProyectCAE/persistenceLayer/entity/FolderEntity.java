@@ -1,39 +1,50 @@
-package com.ProyectCAE.persistenceLayer.entity;
+package com.ProyecyCAE.persistenceLayer.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
 
 @Entity
 @Table(name = "folders")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class FolderEntity {
 
+public class FolderEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idFolder;
+    private Long id;
 
     private String name;
     private String description;
-    private String status;
+    private Boolean active;
 
-    @Column(name = "created_date")
-    private LocalDateTime createdDate;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
-    @Column(name = "updated_date")
-    private LocalDateTime updatedDate;
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
+    // User relationship (carpet owner)
     @ManyToOne
-    @JoinColumn(name = "id_user")
-    private UserEntity user;
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserEntity owner;
 
-    @OneToMany(mappedBy = "folder")
+    // Document relationship
+    @OneToMany(mappedBy = "folder", fetch = FetchType.LAZY)
     private List<DocumentEntity> documents;
+
+    // Automatic Timestamps
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
 }

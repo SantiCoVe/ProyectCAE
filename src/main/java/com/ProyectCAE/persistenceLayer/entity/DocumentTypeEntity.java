@@ -1,16 +1,17 @@
-package com.ProyecyCAE.persistenceLayer.entity;
+package com.ProyectCAE.persistenceLayer.entity;
 
-import jakarta.persistence.*;
 import lombok.*;
+import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "document_types")
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
+@Table(name = "document_types")
+
 public class DocumentTypeEntity {
 
     @Id
@@ -18,12 +19,27 @@ public class DocumentTypeEntity {
     private Long idType;
 
     private String name;
-    private Boolean isGlobal;
-    private Boolean status;
+    private Boolean isGlobal; // true = defaultSystem document types, false = user custom document type
+    private Boolean active;
 
-    private LocalDateTime createdDate;
-    private LocalDateTime updateDate;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "type")
-    private List<DocumentEntity> documents;
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    // User relationship (who created the document type)
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity createdBy;
+
+    // Document relationship
+    @ManyToOne
+    private DocumentTypeEntity documentType;
+
+    // Automatic timestamp
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+    }
 }
