@@ -1,4 +1,7 @@
-package com.proyectCAE.businessLayer.dto
+package com.ProyectCAE.businessLayer.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 @Data
 @NoArgsCOnstructor
