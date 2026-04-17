@@ -1,57 +1,53 @@
+package com.ProyectCAE.persistenceLayer.dao;
 
+import com.tuempresa.gestor.businessLayer.dto.document.DocumentCreateDTO;
+import com.tuempresa.gestor.businessLayer.dto.document.DocumentDTO;
+import com.tuempresa.gestor.businessLayer.dto.document.DocumentUpdateDTO;
+import com.tuempresa.gestor.persistenceLayer.entity.DocumentEntity;
+import com.tuempresa.gestor.persistenceLayer.mapper.DocumentMapper;
+import com.tuempresa.gestor.persistenceLayer.repository.DocumentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
- * DAO para operaciones de persistencia de documentos
+ * DAO para operaciones de persistencia de documentos.
+ * El DTO de respuesta incluye datos denormalizados de folder y documentType.
  */
 @Repository
 @RequiredArgsConstructor
 public class DocumentDAO {
 
-    //private final DocumentRepository documentRepository;
-    //private final DocumentMapper documentMapper;
+    private final DocumentRepository documentRepository;
+    private final DocumentMapper documentMapper;
 
-    /**
-     * Crear un nuevo documento
-     *
-     * FLUJO:
-     * 1. CreateDTO → Entity (Mapper convierte sellerId → SellerEntity)
-     * 2. Guardar Entity en BD
-     * 3. Entity guardada → DTO (con información del vendedor)
-     *
-     * NOTA: El Mapper maneja la conversión sellerId → SellerEntity automáticamente
-     */
     public DocumentDTO save(DocumentCreateDTO createDTO) {
         DocumentEntity entity = documentMapper.toEntity(createDTO);
         DocumentEntity savedEntity = documentRepository.save(entity);
         return documentMapper.toDTO(savedEntity);
     }
 
-    public Optional<DocumentDTO> findById(Long id) {
+    public Optional<DocumentDTO> findById(UUID id) {
         return documentRepository.findById(id)
                 .map(documentMapper::toDTO);
     }
 
     public List<DocumentDTO> findAll() {
-        List<DocumentEntity> entities = documentRepository.findAll();
-        return documentMapper.toDTOList(entities);
+        return documentMapper.toDTOList(documentRepository.findAll());
     }
 
-    public Optional<DocumentDTO> update(Long id, DocumentUpdateDTO updateDTO) {
+    public Optional<DocumentDTO> update(UUID id, DocumentUpdateDTO updateDTO) {
         return documentRepository.findById(id)
-                .map(existingEntity -> {
-                    documentMapper.updateEntityFromDTO(updateDTO, existingEntity);
-                    DocumentEntity updatedEntity = documentRepository.save(existingEntity);
-                    return documentMapper.toDTO(updatedEntity);
+                .map(existing -> {
+                    documentMapper.updateEntityFromDTO(updateDTO, existing);
+                    return documentMapper.toDTO(documentRepository.save(existing));
                 });
     }
 
-    public boolean deleteById(Long id) {
+    public boolean deleteById(UUID id) {
         if (documentRepository.existsById(id)) {
             documentRepository.deleteById(id);
             return true;
@@ -59,42 +55,43 @@ public class DocumentDAO {
         return false;
     }
 
-    public List<DocumentDTO> findBySellerEntityId(Long sellerId) {
-        List<DocumentEntity> entities = documentRepository.findBySellerEntityId(sellerId);
-        return documentMapper.toDTOList(entities);
+    public List<DocumentDTO> findByFolderId(Long folderId) {
+        return documentMapper.toDTOList(documentRepository.findByFolderIdFolder(folderId));
     }
 
-    public List<DocumentDTO> findByNameContaining(String name) {
-        List<DocumentEntity> entities = documentRepository.findByNameContainingIgnoreCase(name);
-        return documentMapper.toDTOList(entities);
+    public List<DocumentDTO> findByDocumentTypeId(Long typeId) {
+        return documentMapper.toDTOList(documentRepository.findByDocumentTypeIdType(typeId));
     }
 
-    public List<DocumentDTO> findAvailableDocuments() {
-        List<DocumentEntity> entities = documentRepository.findByStockGreaterThan(0);
-        return documentMapper.toDTOList(entities);
+    public List<DocumentDTO> findByActive(Boolean active) {
+        return documentMapper.toDTOList(documentRepository.findByActive(active));
     }
 
-    public List<DocumentDTO> findAllOrderByIdAsc() {
-        List<DocumentEntity> entities = documentRepository.findAllByOrderByIdAsc();
-        return documentMapper.toDTOList(entities);
+    public List<DocumentDTO> findByTitleContaining(String title) {
+        return documentMapper.toDTOList(documentRepository.findByTitleContainingIgnoreCase(title));
     }
 
-    public List<DocumentDTO> findAllOrderByIdDesc() {
-        List<DocumentEntity> entities = documentRepository.findAllByOrderByIdDesc();
-        return documentMapper.toDTOList(entities);
+    public List<DocumentDTO> findActiveByFolderId(Long folderId) {
+        return documentMapper.toDTOList(documentRepository.findByFolderIdFolderAndActive(folderId, true));
     }
 
-    public List<DocumentDTO> findLatestDocuments() {
-        List<DocumentEntity> entities = documentRepository.findAllByOrderByCreatedAtDesc();
-        return documentMapper.toDTOList(entities);
+    public List<DocumentDTO> findByFileType(String fileType) {
+        return documentMapper.toDTOList(documentRepository.findByFileType(fileType));
     }
 
+    public List<DocumentDTO> findAllByUserId(Long userId) {
+        return documentMapper.toDTOList(documentRepository.findAllByUserId(userId));
+    }
 
-    /**
-     * Contar total de documentos
-     */
+    public List<DocumentDTO> findActiveDocumentsByUserId(Long userId) {
+        return documentMapper.toDTOList(documentRepository.findActiveDocumentsByUserId(userId));
+    }
+
+    public Long countActiveDocumentsByFolderId(Long folderId) {
+        return documentRepository.countActiveDocumentsByFolderId(folderId);
+    }
+
     public long count() {
         return documentRepository.count();
     }
-
 }
