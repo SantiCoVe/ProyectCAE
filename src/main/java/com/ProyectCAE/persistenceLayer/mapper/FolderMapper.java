@@ -1,6 +1,6 @@
 package com.ProyectCAE.persistenceLayer.mapper;
 
-
+import com.ProyectCAE.persistenceLayer.entity.FolderEntity;
 import org.mapstruct.*;
 import org.springframework.web.bind.annotation.Mapping;
 

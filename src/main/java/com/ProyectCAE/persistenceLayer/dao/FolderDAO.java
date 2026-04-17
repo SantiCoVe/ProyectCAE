@@ -1,11 +1,8 @@
 package com.ProyectCAE.persistenceLayer.dao;
 
-import com.tuempresa.gestor.businessLayer.dto.folder.FolderCreateDTO;
-import com.tuempresa.gestor.businessLayer.dto.folder.FolderDTO;
-import com.tuempresa.gestor.businessLayer.dto.folder.FolderUpdateDTO;
-import com.tuempresa.gestor.persistenceLayer.entity.FolderEntity;
-import com.tuempresa.gestor.persistenceLayer.mapper.FolderMapper;
-import com.tuempresa.gestor.persistenceLayer.repository.FolderRepository;
+import com.ProyectCAE.persistenceLayer.mapper.FolderMapper;
+import com.ProyectCAE.persistenceLayer.repository.FolderRepository;
+import com.ProyectCAE.persistenceLayer.entity.FolderEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

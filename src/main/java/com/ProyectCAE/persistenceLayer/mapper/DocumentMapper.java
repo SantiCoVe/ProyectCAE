@@ -1,12 +1,10 @@
 package com.ProyectCAE.persistenceLayer.mapper;
 
-import com.tuempresa.gestor.businessLayer.dto.document.DocumentCreateDTO;
-import com.tuempresa.gestor.businessLayer.dto.document.DocumentDTO;
-import com.tuempresa.gestor.businessLayer.dto.document.DocumentUpdateDTO;
-import com.tuempresa.gestor.persistenceLayer.entity.DocumentEntity;
-import com.tuempresa.gestor.persistenceLayer.entity.DocumentTypeEntity;
-import com.tuempresa.gestor.persistenceLayer.entity.FolderEntity;
-import org.mapstruct.*;
+
+import com.ProyectCAE.persistenceLayer.entity.DocumentEntity;
+import com.ProyectCAE.persistenceLayer.entity.DocumentTypeEntity;
+import com.ProyectCAE.persistenceLayer.entity.FolderEntity;
+import org.springframework.web.bind.annotation.Mapping;
 
 import java.util.List;
 

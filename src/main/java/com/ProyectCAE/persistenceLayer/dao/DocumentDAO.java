@@ -1,11 +1,9 @@
 package com.ProyectCAE.persistenceLayer.dao;
 
-import com.tuempresa.gestor.businessLayer.dto.document.DocumentCreateDTO;
-import com.tuempresa.gestor.businessLayer.dto.document.DocumentDTO;
-import com.tuempresa.gestor.businessLayer.dto.document.DocumentUpdateDTO;
-import com.tuempresa.gestor.persistenceLayer.entity.DocumentEntity;
-import com.tuempresa.gestor.persistenceLayer.mapper.DocumentMapper;
-import com.tuempresa.gestor.persistenceLayer.repository.DocumentRepository;
+
+import com.ProyectCAE.persistenceLayer.entity.DocumentEntity;
+import com.ProyectCAE.persistenceLayer.mapper.DocumentMapper;
+import com.ProyectCAE.persistenceLayer.repository.DocumentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

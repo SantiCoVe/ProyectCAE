@@ -1,5 +1,7 @@
 package com.ProyecyCAE.persistenceLayer.entity;
 
+import com.ProyectCAE.persistenceLayer.entity.DocumentEntity;
+import com.ProyectCAE.persistenceLayer.entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
