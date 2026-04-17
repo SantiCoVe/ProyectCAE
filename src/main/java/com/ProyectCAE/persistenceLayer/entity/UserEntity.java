@@ -1,5 +1,6 @@
 package com.ProyectCAE.persistenceLayer.entity;
 
+import com.ProyectCAE.persistenceLayer.entity.FolderEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
