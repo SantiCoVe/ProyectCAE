@@ -6,10 +6,11 @@ import jakarta.persistence.*;
 import java.util.List;
 import java.time.LocalDateTime;
 
-@Entity
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Entity
 @Table(name = "document_types")
 
 public class DocumentTypeEntity {
@@ -41,5 +42,5 @@ public class DocumentTypeEntity {
     @PrePersist
     public void prePersist() {
         this.createdAt = LocalDateTime.now();
-    } main
+    }
 }

@@ -1,7 +1,12 @@
-package com.proyectCAE.businessLayer.dto
+package com.ProyectCAE.businessLayer.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Data;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 @Data
-@NoArgsCOnstructor
+@NoArgsConstructor
 @AllArgsConstructor
 @Schema(description = "Datos para crear un nuevo usuario en el aplicativo")
 
@@ -18,7 +23,7 @@ public class UserCreateDTO {
             description = "Apellidos completos del usuario",
             example = "Vanegas Pinilla",
             required = true,
-            maxLenght = 150
+            maxLength = 150
     )
     private String lastName;
 }

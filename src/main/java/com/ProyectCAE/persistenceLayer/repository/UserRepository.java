@@ -1,6 +1,6 @@
 package com.ProyectCAE.persistenceLayer.repository;
 
-import com.ProyectCAE.persostenceLayer.entity.UserEntity;
+import com.ProyectCAE.persistenceLayer.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

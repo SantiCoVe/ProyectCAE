@@ -1,4 +1,4 @@
-package com.ProyecyCAE.persistenceLayer.entity;
+package com.ProyectCAE.persistenceLayer.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -6,11 +6,12 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity
-@Table(name = "folders")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Table(name = "folders")
 
 public class FolderEntity {
 
