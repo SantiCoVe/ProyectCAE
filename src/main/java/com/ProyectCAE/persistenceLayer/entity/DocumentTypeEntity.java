@@ -17,7 +17,7 @@ public class DocumentTypeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idType;
 
     private String name;
     private Boolean isGlobal; // true = defaultSystem document types, false = user custom document type

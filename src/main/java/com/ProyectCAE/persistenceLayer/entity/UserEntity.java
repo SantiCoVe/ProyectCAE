@@ -1,5 +1,6 @@
 package com.ProyectCAE.persistenceLayer.entity;
 
+import com.ProyectCAE.persistenceLayer.entity.FolderEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,24 +28,24 @@ public class UserEntity {
     private String userRole;
     private String status;
 
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    @Column(name = "created_date")
+    private LocalDateTime createdDate;
 
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    @Column(name = "updated_date")
+    private LocalDateTime updatedDate;
 
     // Automatic timestamps
     @PrePersist
     public void prePersist() {
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
+        this.createdDate = LocalDateTime.now();
+        this.updatedDate = LocalDateTime.now();
     }
 
     @PreUpdate
     public void preUpdate() {
-        this.updatedAt = LocalDateTime.now();
+        this.updatedDate = LocalDateTime.now();
     }
 
     @OneToMany(mappedBy = "createdBy", fetch = FetchType.LAZY)
-    private List<DocumentEntity> documents;
+    private List<FolderEntity> folders;
 }

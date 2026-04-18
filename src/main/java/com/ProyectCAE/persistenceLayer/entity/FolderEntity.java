@@ -1,5 +1,7 @@
 package com.ProyectCAE.persistenceLayer.entity;
 
+import com.ProyectCAE.persistenceLayer.entity.DocumentEntity;
+import com.ProyectCAE.persistenceLayer.entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,7 +16,6 @@ import java.util.List;
 @Table(name = "folders")
 
 public class FolderEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
