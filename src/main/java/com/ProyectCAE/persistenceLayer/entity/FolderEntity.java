@@ -1,4 +1,4 @@
-package com.ProyecyCAE.persistenceLayer.entity;
+package com.ProyectCAE.persistenceLayer.entity;
 
 import com.ProyectCAE.persistenceLayer.entity.DocumentEntity;
 import com.ProyectCAE.persistenceLayer.entity.UserEntity;

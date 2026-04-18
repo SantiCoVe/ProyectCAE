@@ -1,6 +1,7 @@
 package com.ProyectCAE.persistenceLayer.mapper;
 
-
+import com.ProyectCAE.businessLayer.dto.UserCreateDTO;
+import com.ProyectCAE.businessLayer.dto.UserDTO;
 import com.ProyectCAE.persistenceLayer.entity.UserEntity;
 import org.springframework.web.bind.annotation.Mapping;
 
