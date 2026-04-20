@@ -28,6 +28,8 @@ public interface FolderMapper {
 
     @Mapping(target = "userId", source = "users.id")
     @Mapping(target = "userName", source = "users.name")
+    @Mapping(target = "userId", source = "user.idUsuario")
+    @Mapping(target = "userName", source = "user.name")
     FolderDTO toDTO(FolderEntity entity);
 
     List<FolderDTO> toDTOList(List<FolderEntity> entities);
@@ -37,6 +39,11 @@ public interface FolderMapper {
     @Mapping(target = "updatedDate", ignore = true)
     @Mapping(target = "documents", ignore = true)
     @Mapping(target = "createdBy", source = "userId", qualifiedByName = "createUserEntityFromId")
+    @Mapping(target = "idFolder", ignore = true)
+    @Mapping(target = "createdDate", ignore = true)
+    @Mapping(target = "updatedDate", ignore = true)
+    @Mapping(target = "documents", ignore = true)
+    @Mapping(target = "user", source = "userId", qualifiedByName = "createUserEntityFromId")
     FolderEntity toEntity(FolderCreateDTO createDTO);
 
     @Mapping(target = "idFolder", ignore = true)

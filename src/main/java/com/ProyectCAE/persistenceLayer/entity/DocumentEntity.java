@@ -53,7 +53,6 @@ public class DocumentEntity {
         this.updatedDate = LocalDateTime.now();
     }
 
-
     @ManyToOne
     @JoinColumn(name = "id_folder", nullable = false)
     private FolderEntity folder;
@@ -65,4 +64,9 @@ public class DocumentEntity {
     @ManyToOne
     @JoinColumn(name = "id_type")
     private DocumentTypeEntity documentType;
+
+    @ManyToOne
+    @JoinColumn(name = "id_type")
+    private DocumentTypeEntity type;
+
 }

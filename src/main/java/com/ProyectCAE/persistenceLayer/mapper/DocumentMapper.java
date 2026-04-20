@@ -29,6 +29,7 @@ import java.util.List;
 public interface DocumentMapper {
 
     @Mapping(target = "folderId", source = "folder.id")
+    @Mapping(target = "folderId", source = "folder.idFolder")
     @Mapping(target = "folderName", source = "folder.name")
     @Mapping(target = "documentTypeId", source = "documentType.idType")
     @Mapping(target = "documentTypeName", source = "documentType.name")
@@ -39,6 +40,8 @@ public interface DocumentMapper {
     @Mapping(target = "idDocument", ignore = true)
     @Mapping(target = "createdDate", ignore = true)
     @Mapping(target = "updatedDate", ignore = true)
+    @Mapping(target = "createDate", ignore = true)
+    @Mapping(target = "updateDate", ignore = true)
     @Mapping(target = "folder", source = "folderId", qualifiedByName = "createFolderEntityFromId")
     @Mapping(target = "documentType", source = "documentTypeId", qualifiedByName = "createDocumentTypeEntityFromId")
     DocumentEntity toEntity(DocumentCreateDTO createDTO);

@@ -52,5 +52,5 @@ public class UserEntity {
 
     // relationship with document
     @OneToMany(mappedBy = "createdBy", fetch = FetchType.LAZY)
-    private List<DocumentEntity> documents;
+    private List<FolderEntity> folders;
 }
