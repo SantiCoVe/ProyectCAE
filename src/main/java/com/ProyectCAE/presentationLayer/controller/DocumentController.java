@@ -23,6 +23,7 @@ public class DocumentController {
             @RequestParam String title,
             @RequestParam String description,
             @RequestParam MultipartFile file,
+            @RequestParam Boolean active,
             @RequestParam Long userId,
             @RequestParam Long folderId,
             @RequestParam Long documentTypeId
@@ -30,7 +31,8 @@ public class DocumentController {
 
         try {
             /*
-            // save files in the system
+            // codigo para manejar guardado en bd
+            // save files in the uploads carpet
             String filePath = "uploads/" + file.getOriginalFilename();
 
             java.nio.file.Files.copy(
@@ -40,13 +42,9 @@ public class DocumentController {
             );
             */
 
+            // codigo para manejar guardado local (sin bd)
             String uploadDir = System.getProperty("user.dir") + "/uploads/";
             java.nio.file.Path uploadPath = java.nio.file.Paths.get(uploadDir);
-
-            // crear carpeta si no existe
-            if (!java.nio.file.Files.exists(uploadPath)) {
-                java.nio.file.Files.createDirectories(uploadPath);
-            }
 
             // ruta final del archivo
             String filePath = uploadDir + file.getOriginalFilename();
@@ -65,13 +63,13 @@ public class DocumentController {
                     filePath,
                     file.getContentType(),
                     file.getSize(),
+                    active,
                     userId,
                     folderId,
                     documentTypeId
             );
 
         } catch (Exception e) {
-            e.printStackTrace();
             throw new RuntimeException("Error uploading file");
         }
     }

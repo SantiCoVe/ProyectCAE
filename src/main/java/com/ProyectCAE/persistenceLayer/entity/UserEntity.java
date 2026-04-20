@@ -46,6 +46,11 @@ public class UserEntity {
         this.updatedDate = LocalDateTime.now();
     }
 
+    // relationship with folders
     @OneToMany(mappedBy = "createdBy", fetch = FetchType.LAZY)
     private List<FolderEntity> folders;
+
+    // relationship with document
+    @OneToMany(mappedBy = "createdBy", fetch = FetchType.LAZY)
+    private List<DocumentEntity> documents;
 }

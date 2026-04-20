@@ -4,7 +4,13 @@ package com.ProyectCAE.persistenceLayer.mapper;
 import com.ProyectCAE.persistenceLayer.entity.DocumentEntity;
 import com.ProyectCAE.persistenceLayer.entity.DocumentTypeEntity;
 import com.ProyectCAE.persistenceLayer.entity.FolderEntity;
-import org.springframework.web.bind.annotation.Mapping;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.ReportingPolicy;
+import org.mapstruct.BeanMapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.Named;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import java.util.List;
 
@@ -22,7 +28,7 @@ import java.util.List;
 )
 public interface DocumentMapper {
 
-    @Mapping(target = "folderId", source = "folder.idFolder")
+    @Mapping(target = "folderId", source = "folder.id")
     @Mapping(target = "folderName", source = "folder.name")
     @Mapping(target = "documentTypeId", source = "documentType.idType")
     @Mapping(target = "documentTypeName", source = "documentType.name")
@@ -31,8 +37,8 @@ public interface DocumentMapper {
     List<DocumentDTO> toDTOList(List<DocumentEntity> entities);
 
     @Mapping(target = "idDocument", ignore = true)
-    @Mapping(target = "createDate", ignore = true)
-    @Mapping(target = "updateDate", ignore = true)
+    @Mapping(target = "createdDate", ignore = true)
+    @Mapping(target = "updatedDate", ignore = true)
     @Mapping(target = "folder", source = "folderId", qualifiedByName = "createFolderEntityFromId")
     @Mapping(target = "documentType", source = "documentTypeId", qualifiedByName = "createDocumentTypeEntityFromId")
     DocumentEntity toEntity(DocumentCreateDTO createDTO);

@@ -29,7 +29,10 @@ public class DocumentEntity {
     @Column(name = "file_type")
     private String fileType;
 
-    private String status;
+    @Column(name = "file_size")
+    private Long fileSize;
+
+    private Boolean active;
     private String observation;
 
     @Column(name = "created_date")
@@ -38,9 +41,7 @@ public class DocumentEntity {
     @Column(name = "updated_date")
     private LocalDateTime updatedDate;
 
-
     // Automatic Timestamps
-
     @PrePersist
     public void prePersist() {
         this.createdDate = LocalDateTime.now();
@@ -52,11 +53,16 @@ public class DocumentEntity {
         this.updatedDate = LocalDateTime.now();
     }
 
+
     @ManyToOne
-    @JoinColumn(name = "id_folder",nullable = false)
+    @JoinColumn(name = "id_folder", nullable = false)
     private FolderEntity folder;
 
     @ManyToOne
+    @JoinColumn(name = "created_by")
+    private UserEntity createdBy;
+
+    @ManyToOne
     @JoinColumn(name = "id_type")
-    private DocumentTypeEntity type;
+    private DocumentTypeEntity documentType;
 }

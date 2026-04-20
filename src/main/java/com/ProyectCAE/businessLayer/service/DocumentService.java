@@ -12,6 +12,7 @@ public interface DocumentService {
             String filePath,
             String fileType,
             Long size,
+            Boolean active,
             Long userId,
             Long folderId,
             Long documentTypeId

@@ -34,6 +34,7 @@ public class DocumentServiceImpl implements DocumentService {
             String filePath,
             String fileType,
             Long size,
+            Boolean active,
             Long userId,
             Long folderId,
             Long documentTypeId
@@ -57,8 +58,8 @@ public class DocumentServiceImpl implements DocumentService {
         document.setDescription(description);
         document.setFilePath(filePath);
         document.setFileType(fileType);
-        document.setDocumentSize(size);
         document.setActive(true);
+        document.setFileSize(size);
 
         document.setCreatedBy(user);
         document.setFolder(folder);
