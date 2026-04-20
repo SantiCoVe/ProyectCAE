@@ -1,8 +1,14 @@
 package com.ProyectCAE.persistenceLayer.mapper;
 
 import com.ProyectCAE.persistenceLayer.entity.FolderEntity;
-import org.mapstruct.*;
-import org.springframework.web.bind.annotation.Mapping;
+import com.ProyectCAE.persistenceLayer.entity.UserEntity;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.ReportingPolicy;
+import org.mapstruct.BeanMapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.Named;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import java.util.List;
 
@@ -20,12 +26,19 @@ import java.util.List;
 )
 public interface FolderMapper {
 
+    @Mapping(target = "userId", source = "users.id")
+    @Mapping(target = "userName", source = "users.name")
     @Mapping(target = "userId", source = "user.idUsuario")
     @Mapping(target = "userName", source = "user.name")
     FolderDTO toDTO(FolderEntity entity);
 
     List<FolderDTO> toDTOList(List<FolderEntity> entities);
 
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdDate", ignore = true)
+    @Mapping(target = "updatedDate", ignore = true)
+    @Mapping(target = "documents", ignore = true)
+    @Mapping(target = "createdBy", source = "userId", qualifiedByName = "createUserEntityFromId")
     @Mapping(target = "idFolder", ignore = true)
     @Mapping(target = "createdDate", ignore = true)
     @Mapping(target = "updatedDate", ignore = true)

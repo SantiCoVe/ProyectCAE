@@ -2,16 +2,15 @@ package com.ProyectCAE.persistenceLayer.entity;
 
 import com.ProyectCAE.persistenceLayer.entity.FolderEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 
@@ -47,6 +46,11 @@ public class UserEntity {
         this.updatedDate = LocalDateTime.now();
     }
 
+    // relationship with folders
+    @OneToMany(mappedBy = "createdBy", fetch = FetchType.LAZY)
+    private List<FolderEntity> folders;
+
+    // relationship with document
     @OneToMany(mappedBy = "createdBy", fetch = FetchType.LAZY)
     private List<FolderEntity> folders;
 }

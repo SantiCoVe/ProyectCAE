@@ -3,7 +3,12 @@ package com.ProyectCAE.persistenceLayer.mapper;
 
 import com.ProyectCAE.persistenceLayer.entity.DocumentTypeEntity;
 import org.mapstruct.*;
-import org.springframework.web.bind.annotation.Mapping;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.ReportingPolicy;
+import org.mapstruct.BeanMapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import java.util.List;
 

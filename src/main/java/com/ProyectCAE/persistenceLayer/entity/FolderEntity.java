@@ -8,11 +8,12 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity
-@Table(name = "folders")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Table(name = "folders")
 
 public class FolderEntity {
     @Id
@@ -24,15 +25,15 @@ public class FolderEntity {
     private Boolean active;
 
     @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    private LocalDateTime createdDate;
 
     @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    private LocalDateTime updatedDate;
 
     // User relationship (carpet owner)
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private UserEntity owner;
+    private UserEntity createdBy;
 
     // Document relationship
     @OneToMany(mappedBy = "folder", fetch = FetchType.LAZY)
@@ -41,12 +42,12 @@ public class FolderEntity {
     // Automatic Timestamps
     @PrePersist
     public void prePersist() {
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
+        this.createdDate = LocalDateTime.now();
+        this.updatedDate = LocalDateTime.now();
     }
 
     @PreUpdate
     public void preUpdate() {
-        this.updatedAt = LocalDateTime.now();
+        this.updatedDate = LocalDateTime.now();
     }
 }
