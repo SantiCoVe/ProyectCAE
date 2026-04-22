@@ -20,8 +20,9 @@ import java.util.List;
 )
 public interface FolderMapper {
 
+    @Mapping(target = "idFolder", source = "id")
     @Mapping(target = "userId", source = "createdBy.id")
-    @Mapping(target = "userNames", source = "createdBy.names")
+    @Mapping(target = "userName", source = "createdBy.name")
     @Mapping(target = "documentCount", expression = "java(entity.getDocuments() == null ? 0L : (long) entity.getDocuments().size())")
     FolderDTO toDTO(FolderEntity entity);
 
@@ -43,7 +44,7 @@ public interface FolderMapper {
     void updateEntityFromDTO(FolderUpdateDTO updateDTO, @MappingTarget FolderEntity entity);
 
     @Named("createUserEntityFromId")
-    default UserEntity createUserEntityFromId(Long userId) {
+    default UserEntity createUserEntityFromId(Integer userId) {
         if (userId == null) return null;
         UserEntity user = new UserEntity();
         user.setId(userId);

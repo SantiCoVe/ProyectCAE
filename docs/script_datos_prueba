@@ -1,0 +1,46 @@
+-- ============================================================
+--  SISTEMA GESTOR DE DOCUMENTOS
+--  Script de datos de prueba
+-- ============================================================
+
+-- ============================================================
+-- TABLA: users
+-- ============================================================
+INSERT INTO users (name, last_name, email, password, phone, user_role, status, created_date, update_date) VALUES
+('Carlos',   'Ramírez',  'carlos.ramirez@email.com',  'hash_pass_1', '555-1001', 'admin',  TRUE,  NOW(), NOW()),
+('María',    'López',    'maria.lopez@email.com',      'hash_pass_2', '555-1002', 'editor', TRUE,  NOW(), NOW()),
+('Jorge',    'Pérez',    'jorge.perez@email.com',      'hash_pass_3', '555-1003', 'viewer', TRUE,  NOW(), NOW()),
+('Ana',      'González', 'ana.gonzalez@email.com',     'hash_pass_4', '555-1004', 'editor', TRUE,  NOW(), NOW()),
+('Luis',     'Martínez', 'luis.martinez@email.com',    'hash_pass_5', '555-1005', 'viewer', FALSE, NOW(), NOW());
+
+-- ============================================================
+-- TABLA: document_type
+-- ============================================================
+INSERT INTO document_type (name, is_global, status, created_date, update_date) VALUES
+('Contrato',         TRUE,  TRUE,  NOW(), NOW()),
+('Factura',          TRUE,  TRUE,  NOW(), NOW()),
+('Informe',          FALSE, TRUE,  NOW(), NOW()),
+('Expediente Legal', FALSE, TRUE,  NOW(), NOW()),
+('Acta',             TRUE,  FALSE, NOW(), NOW());
+
+-- ============================================================
+-- TABLA: folder
+-- ============================================================
+INSERT INTO folder (name, description, status, created_date, updated_date, id_user) VALUES
+('Contratos 2024',     'Carpeta de contratos del año 2024',      'activo',   NOW(), NOW(), 1),
+('Facturas Q1',        'Facturas del primer trimestre',           'activo',   NOW(), NOW(), 1),
+('Informes Internos',  'Informes del equipo de gestión',          'activo',   NOW(), NOW(), 2),
+('Expedientes Legales','Documentos legales de clientes',          'inactivo', NOW(), NOW(), 3),
+('Actas de Reunión',   'Actas generadas en reuniones de equipo',  'activo',   NOW(), NOW(), 4);
+
+-- ============================================================
+-- TABLA: document
+-- ============================================================
+INSERT INTO document (title, description, file_path, file_type, status, create_date, update_date, observation, id_folder, id_type) VALUES
+('Contrato Proveedor A',   'Contrato de servicios con proveedor A',  '/files/contratos/proveedor_a.pdf',    'pdf',  'activo',   NOW(), NOW(), 'Revisado por legal',      1, 1),
+('Contrato Proveedor B',   'Contrato de servicios con proveedor B',  '/files/contratos/proveedor_b.pdf',    'pdf',  'activo',   NOW(), NOW(), 'Pendiente de firma',      1, 1),
+('Factura 001-2024',       'Factura de enero 2024',                  '/files/facturas/factura_001.pdf',     'pdf',  'activo',   NOW(), NOW(), NULL,                      2, 2),
+('Factura 002-2024',       'Factura de febrero 2024',                '/files/facturas/factura_002.xlsx',    'xlsx', 'activo',   NOW(), NOW(), NULL,                      2, 2),
+('Informe Anual 2023',     'Resumen de actividades del año 2023',    '/files/informes/informe_anual.docx',  'docx', 'activo',   NOW(), NOW(), 'Aprobado por dirección',  3, 3),
+('Expediente Cliente 10',  'Documentación legal del cliente 10',     '/files/legales/cliente_10.pdf',       'pdf',  'inactivo', NOW(), NOW(), 'En revisión',             4, 4),
+('Acta Reunión Marzo',     'Acta de la reunión del 15 de marzo',     '/files/actas/acta_marzo.pdf',         'pdf',  'activo',   NOW(), NOW(), NULL,                      5, 5);

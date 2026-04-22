@@ -18,10 +18,15 @@ public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id_usuario")
+    private Integer id;
 
-    private String names;
-    private String lastNames;
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "last_name")
+    private String lastName;
+
     private String email;
     private String password;
     private String phone;
@@ -31,19 +36,19 @@ public class UserEntity {
     @Column(name = "created_date")
     private LocalDateTime createdDate;
 
-    @Column(name = "updated_date")
-    private LocalDateTime updatedDate;
+    @Column(name = "update_date")
+    private LocalDateTime updateDate;
 
     // Automatic timestamps
     @PrePersist
     public void prePersist() {
         this.createdDate = LocalDateTime.now();
-        this.updatedDate = LocalDateTime.now();
+        this.updateDate = LocalDateTime.now();
     }
 
     @PreUpdate
     public void preUpdate() {
-        this.updatedDate = LocalDateTime.now();
+        this.updateDate = LocalDateTime.now();
     }
 
     // relationship with folders

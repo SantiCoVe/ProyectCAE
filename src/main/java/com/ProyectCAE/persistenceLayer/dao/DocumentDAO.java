@@ -31,7 +31,7 @@ public class DocumentDAO {
         return documentMapper.toDTO(savedEntity);
     }
 
-    public Optional<DocumentDTO> findById(long id) {
+    public Optional<DocumentDTO> findById(Integer id) {
         return documentRepository.findById(id)
                 .map(documentMapper::toDTO);
     }
@@ -40,7 +40,7 @@ public class DocumentDAO {
         return documentMapper.toDTOList(documentRepository.findAll());
     }
 
-    public Optional<DocumentDTO> update(long id, DocumentUpdateDTO updateDTO) {
+    public Optional<DocumentDTO> update(Integer id, DocumentUpdateDTO updateDTO) {
         return documentRepository.findById(id)
                 .map(existing -> {
                     documentMapper.updateEntityFromDTO(updateDTO, existing);
@@ -48,7 +48,7 @@ public class DocumentDAO {
                 });
     }
 
-    public boolean deleteById(long id) {
+    public boolean deleteById(Integer id) {
         if (documentRepository.existsById(id)) {
             documentRepository.deleteById(id);
             return true;
@@ -56,40 +56,24 @@ public class DocumentDAO {
         return false;
     }
 
-    public List<DocumentDTO> findByFolderId(long folderId) {
+    public List<DocumentDTO> findByFolderId(Integer folderId) {
         return documentMapper.toDTOList(documentRepository.findByFolder_Id(folderId));
     }
 
-    public List<DocumentDTO> findByDocumentTypeId(long typeId) {
+    public List<DocumentDTO> findByDocumentTypeId(int typeId) {
         return documentMapper.toDTOList(documentRepository.findByDocumentType_IdType(typeId));
     }
 
-    public List<DocumentDTO> findByActive(Boolean active) {
-        return documentMapper.toDTOList(documentRepository.findByActive(active));
+    public List<DocumentDTO> findByStatus(String status) {
+        return documentMapper.toDTOList(documentRepository.findByStatus(status));
     }
 
     public List<DocumentDTO> findByTitleContaining(String title) {
         return documentMapper.toDTOList(documentRepository.findByTitleContainingIgnoreCase(title));
     }
 
-    public List<DocumentDTO> findActiveByFolderId(long folderId) {
-        return documentMapper.toDTOList(documentRepository.findByFolder_IdAndActive(folderId, true));
-    }
-
     public List<DocumentDTO> findByFileType(String fileType) {
         return documentMapper.toDTOList(documentRepository.findByFileType(fileType));
-    }
-
-    public List<DocumentDTO> findAllByUserId(long userId) {
-        return documentMapper.toDTOList(documentRepository.findByCreatedBy_Id(userId));
-    }
-
-    public List<DocumentDTO> findActiveDocumentsByUserId(long userId) {
-        return documentMapper.toDTOList(documentRepository.findByCreatedBy_IdAndActive(userId, true));
-    }
-
-    public long countActiveDocumentsByFolderId(long folderId) {
-        return documentRepository.countByFolder_IdAndActive(folderId, true);
     }
 
     public long count() {

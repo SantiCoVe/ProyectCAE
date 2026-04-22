@@ -16,15 +16,15 @@ public class DocumentUpdateDTO {
     @Schema(description = "Descripción", example = "Descripción actualizada")
     private String description;
 
-    @Schema(description = "Estado activo/inactivo", example = "true")
-    private Boolean active;
+    @Schema(description = "Estado", example = "ACTIVO")
+    private String status;
 
     @Schema(description = "Observación", example = "Observación actualizada")
     private String observation;
 
     @Schema(description = "ID de carpeta", example = "10")
-    private Long folderId;
+    private Integer folderId;
 
     @Schema(description = "ID de tipo de documento", example = "3")
-    private Long documentTypeId;
+    private Integer documentTypeId;
 }

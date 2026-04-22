@@ -17,19 +17,21 @@ import java.util.List;
 )
 public interface UserMapper {
 
+    @Mapping(target = "idUsuario", source = "id")
+    @Mapping(target = "updateDate", source = "updateDate")
     UserDTO toDTO(UserEntity entity);
 
     List<UserDTO> toDTOList(List<UserEntity> entities);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdDate", ignore = true)
-    @Mapping(target = "updatedDate", ignore = true)
+    @Mapping(target = "updateDate", ignore = true)
     @Mapping(target = "folders", ignore = true)
     UserEntity toEntity(UserCreateDTO createDTO);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdDate", ignore = true)
-    @Mapping(target = "updatedDate", ignore = true)
+    @Mapping(target = "updateDate", ignore = true)
     @Mapping(target = "folders", ignore = true)
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateEntityFromDTO(UserUpdateDTO updateDTO, @MappingTarget UserEntity entity);

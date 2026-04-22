@@ -1,0 +1,72 @@
+
+-- ============================================
+-- CREACIÓN DE BASE DE DATOS
+-- ============================================
+
+
+-- Luego de crearla, conéctate a ella antes de ejecutar lo demás
+-- \c sistema_gestor_documentos
+
+
+-- ============================================
+-- TABLA: users
+-- ============================================
+CREATE TABLE users (
+    id_usuario SERIAL PRIMARY KEY,
+    name VARCHAR(100),
+    last_name VARCHAR(100),
+    email VARCHAR(150),
+    password VARCHAR(255),
+    phone VARCHAR(50),
+    user_role VARCHAR(50),
+    status BOOLEAN,
+    created_date TIMESTAMP,
+    update_date TIMESTAMP
+);
+
+-- ============================================
+-- TABLA: folder
+-- ============================================
+CREATE TABLE folder (
+    id_folder SERIAL PRIMARY KEY,
+    name VARCHAR(100),
+    description VARCHAR(255),
+    status VARCHAR(50),
+    created_date TIMESTAMP,
+    updated_date TIMESTAMP,
+    id_user INT,
+
+    FOREIGN KEY (id_user) REFERENCES users(id_usuario)
+);
+
+-- ============================================
+-- TABLA: document_type
+-- ============================================
+CREATE TABLE document_type (
+    id_type SERIAL PRIMARY KEY,
+    name VARCHAR(100),
+    is_global BOOLEAN,
+    status BOOLEAN,
+    created_date TIMESTAMP,
+    update_date TIMESTAMP
+);
+
+-- ============================================
+-- TABLA: document
+-- ============================================
+CREATE TABLE document (
+    id_document SERIAL PRIMARY KEY,
+    title VARCHAR(150),
+    description VARCHAR(255),
+    file_path VARCHAR(255),
+    file_type VARCHAR(50),
+    status VARCHAR(50),
+    create_date TIMESTAMP,
+    update_date TIMESTAMP,
+    observation VARCHAR(255),
+    id_folder INT,
+    id_type INT,
+
+    FOREIGN KEY (id_folder) REFERENCES folder(id_folder),
+    FOREIGN KEY (id_type) REFERENCES document_type(id_type)
+);

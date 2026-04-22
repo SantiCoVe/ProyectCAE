@@ -12,13 +12,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "documents")
+@Table(name = "document")
 
 public class DocumentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_document")
-    private Long idDocument;
+    private Integer idDocument;
 
     private String title;
     private String description;
@@ -29,37 +29,30 @@ public class DocumentEntity {
     @Column(name = "file_type")
     private String fileType;
 
-    @Column(name = "file_size")
-    private Long fileSize;
-
-    private Boolean active;
+    private String status;
     private String observation;
 
-    @Column(name = "created_date")
-    private LocalDateTime createdDate;
+    @Column(name = "create_date")
+    private LocalDateTime createDate;
 
-    @Column(name = "updated_date")
-    private LocalDateTime updatedDate;
+    @Column(name = "update_date")
+    private LocalDateTime updateDate;
 
     // Automatic Timestamps
     @PrePersist
     public void prePersist() {
-        this.createdDate = LocalDateTime.now();
-        this.updatedDate = LocalDateTime.now();
+        this.createDate = LocalDateTime.now();
+        this.updateDate = LocalDateTime.now();
     }
 
     @PreUpdate
     public void preUpdate() {
-        this.updatedDate = LocalDateTime.now();
+        this.updateDate = LocalDateTime.now();
     }
 
     @ManyToOne
-    @JoinColumn(name = "id_folder", nullable = false)
+    @JoinColumn(name = "id_folder")
     private FolderEntity folder;
-
-    @ManyToOne
-    @JoinColumn(name = "created_by")
-    private UserEntity createdBy;
 
     @ManyToOne
     @JoinColumn(name = "id_type")

@@ -3,7 +3,6 @@ package com.ProyectCAE.presentationLayer.controller;
 import com.ProyectCAE.businessLayer.dto.documentDTOs.DocumentCreateDTO;
 import com.ProyectCAE.businessLayer.dto.documentDTOs.DocumentDTO;
 import com.ProyectCAE.businessLayer.dto.documentDTOs.DocumentUpdateDTO;
-import com.ProyectCAE.businessLayer.service.DocumentService;
 import com.ProyectCAE.persistenceLayer.dao.DocumentDAO;
 import com.ProyectCAE.persistenceLayer.mapper.DocumentMapper;
 import org.springframework.web.bind.annotation.*;
@@ -19,12 +18,10 @@ import java.util.List;
 @RequestMapping("/api/documents")
 public class DocumentController {
 
-    private final DocumentService documentService;
     private final DocumentDAO documentDAO;
     private final DocumentMapper documentMapper;
 
-    public DocumentController(DocumentService documentService, DocumentDAO documentDAO, DocumentMapper documentMapper) {
-        this.documentService = documentService;
+    public DocumentController(DocumentDAO documentDAO, DocumentMapper documentMapper) {
         this.documentDAO = documentDAO;
         this.documentMapper = documentMapper;
     }
@@ -33,12 +30,13 @@ public class DocumentController {
     @PostMapping("/upload")
     public DocumentDTO uploadDocument(
             @RequestParam String title,
-            @RequestParam String description,
+            @RequestParam(required = false) String description,
             @RequestParam MultipartFile file,
-            @RequestParam Boolean active,
-            @RequestParam Long userId,
-            @RequestParam Long folderId,
-            @RequestParam Long documentTypeId
+            @RequestParam(required = false) Boolean active,
+            @RequestParam(required = false) String status,
+            @RequestParam(required = false) Integer userId,
+            @RequestParam Integer folderId,
+            @RequestParam Integer documentTypeId
     ) {
 
         try {
@@ -69,18 +67,23 @@ public class DocumentController {
                     java.nio.file.StandardCopyOption.REPLACE_EXISTING
             );
 
-            // save in bd
-            return documentMapper.toDTO(documentService.createDocument(
+            String resolvedStatus = status;
+            if (resolvedStatus == null || resolvedStatus.isBlank()) {
+                resolvedStatus = (active != null && !active) ? "INACTIVE" : "ACTIVE";
+            }
+
+            DocumentCreateDTO createDTO = new DocumentCreateDTO(
                     title,
                     description,
                     filePath,
                     file.getContentType(),
-                    file.getSize(),
-                    active,
-                    userId,
+                    resolvedStatus,
+                    null,
                     folderId,
                     documentTypeId
-            ));
+            );
+
+            return documentDAO.save(createDTO);
 
         } catch (Exception e) {
             throw new RuntimeException("Error uploading file", e);
@@ -89,8 +92,8 @@ public class DocumentController {
 
     // list for carpet
     @GetMapping("/folder/{folderId}")
-    public List<DocumentDTO> getDocumentsByFolder(@PathVariable Long folderId) {
-        return documentMapper.toDTOList(documentService.getDocumentsByFolder(folderId));
+    public List<DocumentDTO> getDocumentsByFolder(@PathVariable Integer folderId) {
+        return documentDAO.findByFolderId(folderId);
     }
 
     @GetMapping
@@ -99,7 +102,7 @@ public class DocumentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DocumentDTO> getById(@PathVariable long id) {
+    public ResponseEntity<DocumentDTO> getById(@PathVariable Integer id) {
         return documentDAO.findById(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -112,7 +115,7 @@ public class DocumentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DocumentDTO> update(@PathVariable long id, @RequestBody @Valid DocumentUpdateDTO updateDTO) {
+    public ResponseEntity<DocumentDTO> update(@PathVariable Integer id, @RequestBody @Valid DocumentUpdateDTO updateDTO) {
         return documentDAO.update(id, updateDTO)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -120,7 +123,9 @@ public class DocumentController {
 
     // delete document (soft/hard depending on entity flag)
     @DeleteMapping("/{id}")
-    public void deleteDocument(@PathVariable Long id) {
-        documentService.deleteDocument(id);
+    public ResponseEntity<Void> deleteDocument(@PathVariable Integer id) {
+        return documentDAO.deleteById(id)
+                ? ResponseEntity.noContent().build()
+                : ResponseEntity.notFound().build();
     }
 }

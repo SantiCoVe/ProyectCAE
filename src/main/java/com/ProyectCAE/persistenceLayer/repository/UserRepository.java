@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 import java.util.Optional;
 
-public interface UserRepository extends JpaRepository<UserEntity, Long> {
+public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 
     Optional<UserEntity> findByEmail(String email);
 
@@ -22,7 +22,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     List<UserEntity> findByStatus(Boolean status);
 
     //Busqueda de usuario por nombre
-    List<UserEntity> findByNamesContainingIgnoreCase(String names);
+    List<UserEntity> findByNameContainingIgnoreCase(String name);
 
     //Validadcion de usuario por email
     boolean existsByEmail(String email);

@@ -22,7 +22,7 @@ public class UserCreateDTO {
             maxLength = 100
     )
     @NotBlank
-    private String names;
+    private String name;
 
     @Schema(
             description = "Apellidos completos del usuario",
@@ -31,7 +31,7 @@ public class UserCreateDTO {
             maxLength = 150
     )
     @NotBlank
-    private String lastNames;
+    private String lastName;
 
     @Schema(description = "Correo electrónico", example = "mariana@empresa.com", required = true)
     @NotBlank

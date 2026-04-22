@@ -14,13 +14,13 @@ import java.time.LocalDateTime;
 public class UserDTO {
 
     @Schema(description = "ID único del usuario", example = "1", accessMode = Schema.AccessMode.READ_ONLY)
-    private Long id;
+    private Integer idUsuario;
 
-    @Schema(description = "Nombre(s) del usuario", example = "Carlos")
-    private String names;
+    @Schema(description = "Nombre del usuario", example = "Carlos")
+    private String name;
 
-    @Schema(description = "Apellido(s) del usuario", example = "Ramírez")
-    private String lastNames;
+    @Schema(description = "Apellido del usuario", example = "Ramírez")
+    private String lastName;
 
     @Schema(description = "Correo electrónico", example = "carlos@empresa.com")
     private String email;
@@ -38,5 +38,5 @@ public class UserDTO {
     private LocalDateTime createdDate;
 
     @Schema(description = "Fecha de última actualización", accessMode = Schema.AccessMode.READ_ONLY)
-    private LocalDateTime updatedDate;
+    private LocalDateTime updateDate;
 }

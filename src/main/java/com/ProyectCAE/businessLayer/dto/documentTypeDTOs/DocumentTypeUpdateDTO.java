@@ -16,6 +16,6 @@ public class DocumentTypeUpdateDTO {
     @Schema(description = "Indica si es global", example = "true")
     private Boolean isGlobal;
 
-    @Schema(description = "Estado activo/inactivo", example = "true")
-    private Boolean active;
+    @Schema(description = "Estado", example = "true")
+    private Boolean status;
 }

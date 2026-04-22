@@ -19,11 +19,11 @@ public class FolderCreateDTO {
     @Schema(description = "Descripción", example = "Carpeta para contratos 2026")
     private String description;
 
-    @Schema(description = "Estado activo/inactivo", example = "true", required = true)
+    @Schema(description = "Estado", example = "ACTIVO", required = true)
     @NotNull
-    private Boolean active;
+    private String status;
 
     @Schema(description = "ID del usuario dueño", example = "1", required = true)
     @NotNull
-    private Long userId;
+    private Integer userId;
 }

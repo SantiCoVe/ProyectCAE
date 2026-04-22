@@ -29,7 +29,7 @@ public class DocumentTypeDAO {
         return documentTypeMapper.toDTO(savedEntity);
     }
 
-    public Optional<DocumentTypeDTO> findById(Long id) {
+    public Optional<DocumentTypeDTO> findById(Integer id) {
         return documentTypeRepository.findById(id)
                 .map(documentTypeMapper::toDTO);
     }
@@ -38,7 +38,7 @@ public class DocumentTypeDAO {
         return documentTypeMapper.toDTOList(documentTypeRepository.findAll());
     }
 
-    public Optional<DocumentTypeDTO> update(Long id, DocumentTypeUpdateDTO updateDTO) {
+    public Optional<DocumentTypeDTO> update(Integer id, DocumentTypeUpdateDTO updateDTO) {
         return documentTypeRepository.findById(id)
                 .map(existing -> {
                     documentTypeMapper.updateEntityFromDTO(updateDTO, existing);
@@ -46,7 +46,7 @@ public class DocumentTypeDAO {
                 });
     }
 
-    public boolean deleteById(Long id) {
+    public boolean deleteById(Integer id) {
         if (documentTypeRepository.existsById(id)) {
             documentTypeRepository.deleteById(id);
             return true;
@@ -64,7 +64,7 @@ public class DocumentTypeDAO {
     }
 
     public List<DocumentTypeDTO> findByActivate(Boolean activate) {
-        return documentTypeMapper.toDTOList(documentTypeRepository.findByActive(activate));
+        return documentTypeMapper.toDTOList(documentTypeRepository.findByStatus(activate));
     }
 
     public List<DocumentTypeDTO> findGlobalTypes() {
@@ -72,7 +72,7 @@ public class DocumentTypeDAO {
     }
 
     public List<DocumentTypeDTO> findActiveGlobalTypes() {
-        return documentTypeMapper.toDTOList(documentTypeRepository.findByActiveAndIsGlobal(true, true));
+        return documentTypeMapper.toDTOList(documentTypeRepository.findByStatusAndIsGlobal(true, true));
     }
 
     public List<DocumentTypeDTO> findTypesInUse() {
