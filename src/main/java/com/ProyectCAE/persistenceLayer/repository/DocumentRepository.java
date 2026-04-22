@@ -26,6 +26,21 @@ import java.util.List;
 @Repository
 public interface DocumentRepository extends JpaRepository<DocumentEntity, Long> {
 
-    List<DocumentEntity> findByFolderId(Long folderId);
+    List<DocumentEntity> findByFolder_Id(Long folderId);
 
+    List<DocumentEntity> findByDocumentType_IdType(Long typeId);
+
+    List<DocumentEntity> findByActive(Boolean active);
+
+    List<DocumentEntity> findByTitleContainingIgnoreCase(String title);
+
+    List<DocumentEntity> findByFileType(String fileType);
+
+    List<DocumentEntity> findByFolder_IdAndActive(Long folderId, Boolean active);
+
+    List<DocumentEntity> findByCreatedBy_Id(Long userId);
+
+    List<DocumentEntity> findByCreatedBy_IdAndActive(Long userId, Boolean active);
+
+    long countByFolder_IdAndActive(Long folderId, Boolean active);
 }

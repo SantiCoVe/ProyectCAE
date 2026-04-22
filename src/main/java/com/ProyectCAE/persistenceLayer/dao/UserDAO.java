@@ -1,6 +1,8 @@
 package com.ProyectCAE.persistenceLayer.dao;
 
-import com.ProyectCAE.businessLayer.dto.*;
+import com.ProyectCAE.businessLayer.dto.userDTOs.UserCreateDTO;
+import com.ProyectCAE.businessLayer.dto.userDTOs.UserDTO;
+import com.ProyectCAE.businessLayer.dto.userDTOs.UserUpdateDTO;
 import com.ProyectCAE.persistenceLayer.entity.UserEntity;
 import com.ProyectCAE.persistenceLayer.mapper.UserMapper;
 import com.ProyectCAE.persistenceLayer.repository.UserRepository;
@@ -63,7 +65,7 @@ public class UserDAO {
     }
 
     public List<UserDTO> findByNameContaining(String name) {
-        return userMapper.toDTOList(userRepository.findByNameContainingIgnoreCase(name));
+        return userMapper.toDTOList(userRepository.findByNamesContainingIgnoreCase(name));
     }
 
     public List<UserDTO> findByStatus(Boolean status) {

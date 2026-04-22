@@ -26,7 +26,7 @@ public class UserEntity {
     private String password;
     private String phone;
     private String userRole;
-    private String status;
+    private Boolean status;
 
     @Column(name = "created_date")
     private LocalDateTime createdDate;
@@ -51,6 +51,6 @@ public class UserEntity {
     private List<FolderEntity> folders;
 
     // relationship with document
-    @OneToMany(mappedBy = "createdBy", fetch = FetchType.LAZY)
-    private List<FolderEntity> folders;
+//    @OneToMany(mappedBy = "createdBy", fetch = FetchType.LAZY)
+//    private List<FolderEntity> folders;
 }

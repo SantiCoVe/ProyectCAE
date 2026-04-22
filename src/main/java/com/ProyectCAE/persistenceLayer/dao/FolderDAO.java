@@ -1,5 +1,8 @@
 package com.ProyectCAE.persistenceLayer.dao;
 
+import com.ProyectCAE.businessLayer.dto.folderDTOs.FolderCreateDTO;
+import com.ProyectCAE.businessLayer.dto.folderDTOs.FolderDTO;
+import com.ProyectCAE.businessLayer.dto.folderDTOs.FolderUpdateDTO;
 import com.ProyectCAE.persistenceLayer.mapper.FolderMapper;
 import com.ProyectCAE.persistenceLayer.repository.FolderRepository;
 import com.ProyectCAE.persistenceLayer.entity.FolderEntity;
@@ -52,10 +55,10 @@ public class FolderDAO {
     }
 
     public List<FolderDTO> findByUserId(Long userId) {
-        return folderMapper.toDTOList(folderRepository.findByUserIdUsuario(userId));
+        return folderMapper.toDTOList(folderRepository.findByCreatedBy_Id(userId));
     }
 
-    public List<FolderDTO> findByActive(String active) {
+    public List<FolderDTO> findByActive(Boolean active) {
         return folderMapper.toDTOList(folderRepository.findByActive(active));
     }
 
@@ -63,8 +66,8 @@ public class FolderDAO {
         return folderMapper.toDTOList(folderRepository.findByNameContainingIgnoreCase(name));
     }
 
-    public List<FolderDTO> findByUserIdAndActive(Long userId, String active) {
-        return folderMapper.toDTOList(folderRepository.findByUserIdUsuarioAndActive(userId, active));
+    public List<FolderDTO> findByUserIdAndActive(Long userId, Boolean active) {
+        return folderMapper.toDTOList(folderRepository.findByCreatedBy_IdAndActive(userId, active));
     }
 
     public List<FolderDTO> findEmptyFolders() {

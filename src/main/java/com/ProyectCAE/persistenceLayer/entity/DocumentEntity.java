@@ -65,8 +65,4 @@ public class DocumentEntity {
     @JoinColumn(name = "id_type")
     private DocumentTypeEntity documentType;
 
-    @ManyToOne
-    @JoinColumn(name = "id_type")
-    private DocumentTypeEntity type;
-
 }

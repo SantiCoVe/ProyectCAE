@@ -34,13 +34,19 @@ public class DocumentTypeEntity {
     @JoinColumn(name = "user_id")
     private UserEntity createdBy;
 
-    // Document relationship
-    @ManyToOne
-    private DocumentTypeEntity documentType;
+    // Documents that use this type
+    @OneToMany(mappedBy = "documentType", fetch = FetchType.LAZY)
+    private List<DocumentEntity> documents;
 
     // Automatic timestamp
     @PrePersist
     public void prePersist() {
         this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = LocalDateTime.now();
     }
 }

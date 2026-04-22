@@ -1,14 +1,10 @@
 package com.ProyectCAE.persistenceLayer.mapper;
 
-import com.ProyectCAE.businessLayer.dto.UserCreateDTO;
-import com.ProyectCAE.businessLayer.dto.UserDTO;
+import com.ProyectCAE.businessLayer.dto.userDTOs.UserCreateDTO;
+import com.ProyectCAE.businessLayer.dto.userDTOs.UserDTO;
+import com.ProyectCAE.businessLayer.dto.userDTOs.UserUpdateDTO;
 import com.ProyectCAE.persistenceLayer.entity.UserEntity;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.ReportingPolicy;
-import org.mapstruct.BeanMapping;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.*;
 
 import java.util.List;
 
@@ -28,16 +24,12 @@ public interface UserMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdDate", ignore = true)
     @Mapping(target = "updatedDate", ignore = true)
-    @Mapping(target = "idUsuario", ignore = true)
-    @Mapping(target = "createdDate", ignore = true)
-    @Mapping(target = "updateDate", ignore = true)
     @Mapping(target = "folders", ignore = true)
     UserEntity toEntity(UserCreateDTO createDTO);
 
-    @Mapping(target = "idUsuario", ignore = true)
-    @Mapping(target = "email", ignore = true)
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdDate", ignore = true)
-    @Mapping(target = "updateDate", ignore = true)
+    @Mapping(target = "updatedDate", ignore = true)
     @Mapping(target = "folders", ignore = true)
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateEntityFromDTO(UserUpdateDTO updateDTO, @MappingTarget UserEntity entity);

@@ -58,7 +58,7 @@ public class DocumentServiceImpl implements DocumentService {
         document.setDescription(description);
         document.setFilePath(filePath);
         document.setFileType(fileType);
-        document.setActive(true);
+        document.setActive(active != null ? active : true);
         document.setFileSize(size);
 
         document.setCreatedBy(user);
@@ -72,7 +72,7 @@ public class DocumentServiceImpl implements DocumentService {
     // 📂 GET DOCUMENTS BY FOLDER
     @Override
     public List<DocumentEntity> getDocumentsByFolder(Long folderId) {
-        return documentRepository.findByFolderId(folderId);
+        return documentRepository.findByFolder_Id(folderId);
     }
 
     // delete document
