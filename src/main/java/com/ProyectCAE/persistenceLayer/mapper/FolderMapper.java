@@ -1,24 +1,18 @@
 package com.ProyectCAE.persistenceLayer.mapper;
 
+import com.ProyectCAE.businessLayer.dto.folderDTOs.FolderCreateDTO;
+import com.ProyectCAE.businessLayer.dto.folderDTOs.FolderDTO;
+import com.ProyectCAE.businessLayer.dto.folderDTOs.FolderUpdateDTO;
 import com.ProyectCAE.persistenceLayer.entity.FolderEntity;
 import com.ProyectCAE.persistenceLayer.entity.UserEntity;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.ReportingPolicy;
-import org.mapstruct.BeanMapping;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.Named;
-import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.*;
 
 import java.util.List;
 
 /**
  * Mapper para conversiones entre FolderEntity y DTOs
  *
- * MAPEOS PERSONALIZADOS:
- * - userId: Se extrae de user.idUsuario
- * - userName: Se extrae de user.name (dato denormalizado)
- * - Al crear, userId → UserEntity (solo con ID, JPA resuelve la relación)
+ * El DTO de respuesta incluye datos denormalizados del usuario (userId, userNames)
  */
 @Mapper(
         componentModel = "spring",
@@ -26,10 +20,9 @@ import java.util.List;
 )
 public interface FolderMapper {
 
-    @Mapping(target = "userId", source = "users.id")
-    @Mapping(target = "userName", source = "users.name")
-    @Mapping(target = "userId", source = "user.idUsuario")
-    @Mapping(target = "userName", source = "user.name")
+    @Mapping(target = "userId", source = "createdBy.id")
+    @Mapping(target = "userNames", source = "createdBy.names")
+    @Mapping(target = "documentCount", expression = "java(entity.getDocuments() == null ? 0L : (long) entity.getDocuments().size())")
     FolderDTO toDTO(FolderEntity entity);
 
     List<FolderDTO> toDTOList(List<FolderEntity> entities);
@@ -39,18 +32,13 @@ public interface FolderMapper {
     @Mapping(target = "updatedDate", ignore = true)
     @Mapping(target = "documents", ignore = true)
     @Mapping(target = "createdBy", source = "userId", qualifiedByName = "createUserEntityFromId")
-    @Mapping(target = "idFolder", ignore = true)
-    @Mapping(target = "createdDate", ignore = true)
-    @Mapping(target = "updatedDate", ignore = true)
-    @Mapping(target = "documents", ignore = true)
-    @Mapping(target = "user", source = "userId", qualifiedByName = "createUserEntityFromId")
     FolderEntity toEntity(FolderCreateDTO createDTO);
 
-    @Mapping(target = "idFolder", ignore = true)
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdDate", ignore = true)
     @Mapping(target = "updatedDate", ignore = true)
     @Mapping(target = "documents", ignore = true)
-    @Mapping(target = "user", ignore = true)
+    @Mapping(target = "createdBy", ignore = true)
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateEntityFromDTO(FolderUpdateDTO updateDTO, @MappingTarget FolderEntity entity);
 
@@ -58,7 +46,7 @@ public interface FolderMapper {
     default UserEntity createUserEntityFromId(Long userId) {
         if (userId == null) return null;
         UserEntity user = new UserEntity();
-        user.setIdUsuario(userId);
+        user.setId(userId);
         return user;
     }
 }

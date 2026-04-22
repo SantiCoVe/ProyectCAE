@@ -1,16 +1,14 @@
 package com.ProyectCAE.persistenceLayer.mapper;
 
 
+import com.ProyectCAE.businessLayer.dto.documentDTOs.DocumentCreateDTO;
+import com.ProyectCAE.businessLayer.dto.documentDTOs.DocumentDTO;
+import com.ProyectCAE.businessLayer.dto.documentDTOs.DocumentUpdateDTO;
 import com.ProyectCAE.persistenceLayer.entity.DocumentEntity;
 import com.ProyectCAE.persistenceLayer.entity.DocumentTypeEntity;
 import com.ProyectCAE.persistenceLayer.entity.FolderEntity;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.ReportingPolicy;
-import org.mapstruct.BeanMapping;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.Named;
-import org.mapstruct.NullValuePropertyMappingStrategy;
+import com.ProyectCAE.persistenceLayer.entity.UserEntity;
+import org.mapstruct.*;
 
 import java.util.List;
 
@@ -20,7 +18,8 @@ import java.util.List;
  * MAPEOS PERSONALIZADOS:
  * - folderId / folderName: extraídos de folder.*
  * - documentTypeId / documentTypeName: extraídos de documentType.*
- * - Al crear, folderId → FolderEntity y documentTypeId → DocumentTypeEntity
+ * - createdById: extraído de createdBy.id
+ * - Al crear/actualizar, folderId → FolderEntity, documentTypeId → DocumentTypeEntity, createdById → UserEntity
  */
 @Mapper(
         componentModel = "spring",
@@ -29,10 +28,10 @@ import java.util.List;
 public interface DocumentMapper {
 
     @Mapping(target = "folderId", source = "folder.id")
-    @Mapping(target = "folderId", source = "folder.idFolder")
     @Mapping(target = "folderName", source = "folder.name")
     @Mapping(target = "documentTypeId", source = "documentType.idType")
     @Mapping(target = "documentTypeName", source = "documentType.name")
+    @Mapping(target = "createdById", source = "createdBy.id")
     DocumentDTO toDTO(DocumentEntity entity);
 
     List<DocumentDTO> toDTOList(List<DocumentEntity> entities);
@@ -40,17 +39,17 @@ public interface DocumentMapper {
     @Mapping(target = "idDocument", ignore = true)
     @Mapping(target = "createdDate", ignore = true)
     @Mapping(target = "updatedDate", ignore = true)
-    @Mapping(target = "createDate", ignore = true)
-    @Mapping(target = "updateDate", ignore = true)
     @Mapping(target = "folder", source = "folderId", qualifiedByName = "createFolderEntityFromId")
     @Mapping(target = "documentType", source = "documentTypeId", qualifiedByName = "createDocumentTypeEntityFromId")
+    @Mapping(target = "createdBy", source = "createdById", qualifiedByName = "createUserEntityFromId")
     DocumentEntity toEntity(DocumentCreateDTO createDTO);
 
     @Mapping(target = "idDocument", ignore = true)
-    @Mapping(target = "createDate", ignore = true)
-    @Mapping(target = "updateDate", ignore = true)
-    @Mapping(target = "folder", ignore = true)
-    @Mapping(target = "documentType", ignore = true)
+    @Mapping(target = "createdDate", ignore = true)
+    @Mapping(target = "updatedDate", ignore = true)
+    @Mapping(target = "folder", source = "folderId", qualifiedByName = "createFolderEntityFromId")
+    @Mapping(target = "documentType", source = "documentTypeId", qualifiedByName = "createDocumentTypeEntityFromId")
+    @Mapping(target = "createdBy", ignore = true)
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateEntityFromDTO(DocumentUpdateDTO updateDTO, @MappingTarget DocumentEntity entity);
 
@@ -58,7 +57,7 @@ public interface DocumentMapper {
     default FolderEntity createFolderEntityFromId(Long folderId) {
         if (folderId == null) return null;
         FolderEntity folder = new FolderEntity();
-        folder.setIdFolder(folderId);
+        folder.setId(folderId);
         return folder;
     }
 
@@ -68,5 +67,13 @@ public interface DocumentMapper {
         DocumentTypeEntity type = new DocumentTypeEntity();
         type.setIdType(typeId);
         return type;
+    }
+
+    @Named("createUserEntityFromId")
+    default UserEntity createUserEntityFromId(Long userId) {
+        if (userId == null) return null;
+        UserEntity user = new UserEntity();
+        user.setId(userId);
+        return user;
     }
 }

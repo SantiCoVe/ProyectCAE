@@ -1,6 +1,9 @@
 package com.ProyectCAE.persistenceLayer.dao;
 
 
+import com.ProyectCAE.businessLayer.dto.documentTypeDTOs.DocumentTypeCreateDTO;
+import com.ProyectCAE.businessLayer.dto.documentTypeDTOs.DocumentTypeDTO;
+import com.ProyectCAE.businessLayer.dto.documentTypeDTOs.DocumentTypeUpdateDTO;
 import com.ProyectCAE.persistenceLayer.entity.DocumentTypeEntity;
 import com.ProyectCAE.persistenceLayer.mapper.DocumentTypeMapper;
 import com.ProyectCAE.persistenceLayer.repository.DocumentTypeRepository;
@@ -52,24 +55,24 @@ public class DocumentTypeDAO {
     }
 
     public boolean existsByName(String name) {
-        return documentTypeRepository.existsByName(name);
+        return documentTypeRepository.existsByNameIgnoreCase(name);
     }
 
     public Optional<DocumentTypeDTO> findByName(String name) {
-        return documentTypeRepository.findByName(name)
+        return documentTypeRepository.findByNameIgnoreCase(name)
                 .map(documentTypeMapper::toDTO);
     }
 
     public List<DocumentTypeDTO> findByActivate(Boolean activate) {
-        return documentTypeMapper.toDTOList(documentTypeRepository.findByActivate(activate));
+        return documentTypeMapper.toDTOList(documentTypeRepository.findByActive(activate));
     }
 
     public List<DocumentTypeDTO> findGlobalTypes() {
-        return documentTypeMapper.toDTOList(documentTypeRepository.findByIsGlobal(true));
+        return documentTypeMapper.toDTOList(documentTypeRepository.findByIsGlobalTrue());
     }
 
     public List<DocumentTypeDTO> findActiveGlobalTypes() {
-        return documentTypeMapper.toDTOList(documentTypeRepository.findByActivateAndIsGlobal(true, true));
+        return documentTypeMapper.toDTOList(documentTypeRepository.findByActiveAndIsGlobal(true, true));
     }
 
     public List<DocumentTypeDTO> findTypesInUse() {

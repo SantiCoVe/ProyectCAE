@@ -1,10 +1,10 @@
-package com.ProyectCAE.businessLayer.dto;
+package com.ProyectCAE.businessLayer.dto.userDTOs;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.xml.validation.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
 
 @Data
@@ -14,13 +14,13 @@ import java.time.LocalDateTime;
 public class UserDTO {
 
     @Schema(description = "ID único del usuario", example = "1", accessMode = Schema.AccessMode.READ_ONLY)
-    private Long idUsuario;
+    private Long id;
 
-    @Schema(description = "Nombre del usuario", example = "Carlos")
-    private String name;
+    @Schema(description = "Nombre(s) del usuario", example = "Carlos")
+    private String names;
 
-    @Schema(description = "Apellido del usuario", example = "Ramírez")
-    private String lastName;
+    @Schema(description = "Apellido(s) del usuario", example = "Ramírez")
+    private String lastNames;
 
     @Schema(description = "Correo electrónico", example = "carlos@empresa.com")
     private String email;
@@ -38,5 +38,5 @@ public class UserDTO {
     private LocalDateTime createdDate;
 
     @Schema(description = "Fecha de última actualización", accessMode = Schema.AccessMode.READ_ONLY)
-    private LocalDateTime updateDate;
+    private LocalDateTime updatedDate;
 }
