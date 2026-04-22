@@ -30,7 +30,7 @@ public class UserDAO {
         return userMapper.toDTO(savedEntity);
     }
 
-    public Optional<UserDTO> findById(Long id) {
+    public Optional<UserDTO> findById(Integer id) {
         return userRepository.findById(id)
                 .map(userMapper::toDTO);
     }
@@ -39,7 +39,7 @@ public class UserDAO {
         return userMapper.toDTOList(userRepository.findAll());
     }
 
-    public Optional<UserDTO> update(Long id, UserUpdateDTO updateDTO) {
+    public Optional<UserDTO> update(Integer id, UserUpdateDTO updateDTO) {
         return userRepository.findById(id)
                 .map(existing -> {
                     userMapper.updateEntityFromDTO(updateDTO, existing);
@@ -47,7 +47,7 @@ public class UserDAO {
                 });
     }
 
-    public boolean deleteById(Long id) {
+    public boolean deleteById(Integer id) {
         if (userRepository.existsById(id)) {
             userRepository.deleteById(id);
             return true;
@@ -65,7 +65,7 @@ public class UserDAO {
     }
 
     public List<UserDTO> findByNameContaining(String name) {
-        return userMapper.toDTOList(userRepository.findByNamesContainingIgnoreCase(name));
+        return userMapper.toDTOList(userRepository.findByNameContainingIgnoreCase(name));
     }
 
     public List<UserDTO> findByStatus(Boolean status) {

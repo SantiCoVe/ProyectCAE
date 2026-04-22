@@ -13,26 +13,27 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "folders")
+@Table(name = "folder")
 
 public class FolderEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id_folder")
+    private Integer id;
 
     private String name;
     private String description;
-    private Boolean active;
+    private String status;
 
-    @Column(name = "created_at")
+    @Column(name = "created_date")
     private LocalDateTime createdDate;
 
-    @Column(name = "updated_at")
+    @Column(name = "updated_date")
     private LocalDateTime updatedDate;
 
     // User relationship (carpet owner)
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "id_user")
     private UserEntity createdBy;
 
     // Document relationship

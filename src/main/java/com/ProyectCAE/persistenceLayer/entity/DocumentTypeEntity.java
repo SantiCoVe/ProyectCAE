@@ -11,28 +11,25 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "document_types")
+@Table(name = "document_type")
 
 public class DocumentTypeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idType;
+    @Column(name = "id_type")
+    private Integer idType;
 
     private String name;
     private Boolean isGlobal; // true = defaultSystem document types, false = user custom document type
-    private Boolean active;
+    @Column(name = "status")
+    private Boolean status;
 
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    @Column(name = "created_date")
+    private LocalDateTime createdDate;
 
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
-
-    // User relationship (who created the document type)
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private UserEntity createdBy;
+    @Column(name = "update_date")
+    private LocalDateTime updateDate;
 
     // Documents that use this type
     @OneToMany(mappedBy = "documentType", fetch = FetchType.LAZY)
@@ -41,12 +38,12 @@ public class DocumentTypeEntity {
     // Automatic timestamp
     @PrePersist
     public void prePersist() {
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
+        this.createdDate = LocalDateTime.now();
+        this.updateDate = LocalDateTime.now();
     }
 
     @PreUpdate
     public void preUpdate() {
-        this.updatedAt = LocalDateTime.now();
+        this.updateDate = LocalDateTime.now();
     }
 }

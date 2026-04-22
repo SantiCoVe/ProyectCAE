@@ -20,10 +20,7 @@ public class DocumentTypeCreateDTO {
     @NotNull
     private Boolean isGlobal;
 
-    @Schema(description = "Estado activo/inactivo", example = "true", required = true)
+    @Schema(description = "Estado", example = "true", required = true)
     @NotNull
-    private Boolean active;
-
-    @Schema(description = "ID del usuario creador (opcional para tipos globales)", example = "1")
-    private Long createdById;
+    private Boolean status;
 }

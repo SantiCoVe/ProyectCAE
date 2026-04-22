@@ -27,7 +27,7 @@ public class DocumentTypeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DocumentTypeDTO> getById(@PathVariable Long id) {
+    public ResponseEntity<DocumentTypeDTO> getById(@PathVariable Integer id) {
         return documentTypeDAO.findById(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -48,17 +48,16 @@ public class DocumentTypeController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DocumentTypeDTO> update(@PathVariable Long id, @RequestBody @Valid DocumentTypeUpdateDTO updateDTO) {
+    public ResponseEntity<DocumentTypeDTO> update(@PathVariable Integer id, @RequestBody @Valid DocumentTypeUpdateDTO updateDTO) {
         return documentTypeDAO.update(id, updateDTO)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
         return documentTypeDAO.deleteById(id)
                 ? ResponseEntity.noContent().build()
                 : ResponseEntity.notFound().build();
     }
 }
-

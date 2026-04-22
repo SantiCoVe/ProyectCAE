@@ -44,3 +44,10 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+tasks.register('dbIntrospect', JavaExec) {
+	group = 'verification'
+	description = 'Prints columns from configured PostgreSQL database (dev profile).'
+	classpath = sourceSets.main.runtimeClasspath
+	mainClass = 'com.ProyectCAE.tools.DbIntrospect'
+}

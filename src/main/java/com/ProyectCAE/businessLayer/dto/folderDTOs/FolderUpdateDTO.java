@@ -16,6 +16,6 @@ public class FolderUpdateDTO {
     @Schema(description = "Descripción", example = "Descripción actualizada")
     private String description;
 
-    @Schema(description = "Estado activo/inactivo", example = "true")
-    private Boolean active;
+    @Schema(description = "Estado", example = "ACTIVO")
+    private String status;
 }

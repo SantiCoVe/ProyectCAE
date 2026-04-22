@@ -14,10 +14,10 @@ import jakarta.validation.constraints.Email;
 public class UserUpdateDTO {
 
     @Schema(description = "Nombre(s) del usuario", example = "Carlos Alberto")
-    private String names;
+    private String name;
 
     @Schema(description = "Apellido(s) del usuario", example = "Ramírez López")
-    private String lastNames;
+    private String lastName;
 
     @Schema(description = "Correo electrónico", example = "carlos@empresa.com")
     @Email

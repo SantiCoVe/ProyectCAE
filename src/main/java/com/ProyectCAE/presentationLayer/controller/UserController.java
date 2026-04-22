@@ -27,7 +27,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> getById(@PathVariable Long id) {
+    public ResponseEntity<UserDTO> getById(@PathVariable Integer id) {
         return userDAO.findById(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -39,21 +39,20 @@ public class UserController {
             return ResponseEntity.badRequest().build();
         }
         UserDTO created = userDAO.save(createDTO);
-        return ResponseEntity.created(URI.create("/api/users/" + created.getId())).body(created);
+        return ResponseEntity.created(URI.create("/api/users/" + created.getIdUsuario())).body(created);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> update(@PathVariable Long id, @RequestBody @Valid UserUpdateDTO updateDTO) {
+    public ResponseEntity<UserDTO> update(@PathVariable Integer id, @RequestBody @Valid UserUpdateDTO updateDTO) {
         return userDAO.update(id, updateDTO)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
         return userDAO.deleteById(id)
                 ? ResponseEntity.noContent().build()
                 : ResponseEntity.notFound().build();
     }
 }
-

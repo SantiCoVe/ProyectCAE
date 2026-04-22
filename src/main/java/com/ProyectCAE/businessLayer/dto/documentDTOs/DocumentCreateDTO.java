@@ -26,25 +26,18 @@ public class DocumentCreateDTO {
     @Schema(description = "Tipo MIME", example = "application/pdf")
     private String fileType;
 
-    @Schema(description = "Tamaño en bytes", example = "12345")
-    private Long fileSize;
-
-    @Schema(description = "Estado activo/inactivo", example = "true", required = true)
-    @NotNull
-    private Boolean active;
+    @Schema(description = "Estado", example = "ACTIVO", required = true)
+    @NotBlank
+    private String status;
 
     @Schema(description = "Observación", example = "Revisar firmas")
     private String observation;
 
     @Schema(description = "ID de carpeta", example = "10", required = true)
     @NotNull
-    private Long folderId;
+    private Integer folderId;
 
     @Schema(description = "ID de tipo de documento", example = "3", required = true)
     @NotNull
-    private Long documentTypeId;
-
-    @Schema(description = "ID del usuario creador", example = "1", required = true)
-    @NotNull
-    private Long createdById;
+    private Integer documentTypeId;
 }

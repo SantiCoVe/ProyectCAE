@@ -7,19 +7,19 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface FolderRepository extends JpaRepository<FolderEntity, Long> {
+public interface FolderRepository extends JpaRepository<FolderEntity, Integer> {
 
-    List<FolderEntity> findByCreatedBy_Id(Long userId);
+    List<FolderEntity> findByCreatedBy_Id(Integer userId);
 
-    List<FolderEntity> findByActive(Boolean active);
+    List<FolderEntity> findByStatus(String status);
 
     List<FolderEntity> findByNameContainingIgnoreCase(String name);
 
-    List<FolderEntity> findByCreatedBy_IdAndActive(Long userId, Boolean active);
+    List<FolderEntity> findByCreatedBy_IdAndStatus(Integer userId, String status);
 
     @Query("select f from FolderEntity f where f.documents is empty")
     List<FolderEntity> findEmptyFolders();
 
     @Query("select count(d) from DocumentEntity d where d.folder.id = :folderId")
-    Long countDocumentsByFolderId(@Param("folderId") Long folderId);
+    Long countDocumentsByFolderId(@Param("folderId") Integer folderId);
 }

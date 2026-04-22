@@ -27,35 +27,34 @@ public class FolderController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<FolderDTO> getById(@PathVariable Long id) {
+    public ResponseEntity<FolderDTO> getById(@PathVariable Integer id) {
         return folderDAO.findById(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping("/by-user/{userId}")
-    public List<FolderDTO> listByUser(@PathVariable Long userId) {
+    public List<FolderDTO> listByUser(@PathVariable Integer userId) {
         return folderDAO.findByUserId(userId);
     }
 
     @PostMapping
     public ResponseEntity<FolderDTO> create(@RequestBody @Valid FolderCreateDTO createDTO) {
         FolderDTO created = folderDAO.save(createDTO);
-        return ResponseEntity.created(URI.create("/api/folders/" + created.getId())).body(created);
+        return ResponseEntity.created(URI.create("/api/folders/" + created.getIdFolder())).body(created);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<FolderDTO> update(@PathVariable Long id, @RequestBody @Valid FolderUpdateDTO updateDTO) {
+    public ResponseEntity<FolderDTO> update(@PathVariable Integer id, @RequestBody @Valid FolderUpdateDTO updateDTO) {
         return folderDAO.update(id, updateDTO)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
         return folderDAO.deleteById(id)
                 ? ResponseEntity.noContent().build()
                 : ResponseEntity.notFound().build();
     }
 }
-

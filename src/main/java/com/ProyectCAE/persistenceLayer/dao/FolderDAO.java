@@ -29,7 +29,7 @@ public class FolderDAO {
         return folderMapper.toDTO(savedEntity);
     }
 
-    public Optional<FolderDTO> findById(Long id) {
+    public Optional<FolderDTO> findById(Integer id) {
         return folderRepository.findById(id)
                 .map(folderMapper::toDTO);
     }
@@ -38,7 +38,7 @@ public class FolderDAO {
         return folderMapper.toDTOList(folderRepository.findAll());
     }
 
-    public Optional<FolderDTO> update(Long id, FolderUpdateDTO updateDTO) {
+    public Optional<FolderDTO> update(Integer id, FolderUpdateDTO updateDTO) {
         return folderRepository.findById(id)
                 .map(existing -> {
                     folderMapper.updateEntityFromDTO(updateDTO, existing);
@@ -46,7 +46,7 @@ public class FolderDAO {
                 });
     }
 
-    public boolean deleteById(Long id) {
+    public boolean deleteById(Integer id) {
         if (folderRepository.existsById(id)) {
             folderRepository.deleteById(id);
             return true;
@@ -54,27 +54,27 @@ public class FolderDAO {
         return false;
     }
 
-    public List<FolderDTO> findByUserId(Long userId) {
+    public List<FolderDTO> findByUserId(Integer userId) {
         return folderMapper.toDTOList(folderRepository.findByCreatedBy_Id(userId));
     }
 
-    public List<FolderDTO> findByActive(Boolean active) {
-        return folderMapper.toDTOList(folderRepository.findByActive(active));
+    public List<FolderDTO> findByStatus(String status) {
+        return folderMapper.toDTOList(folderRepository.findByStatus(status));
     }
 
     public List<FolderDTO> findByNameContaining(String name) {
         return folderMapper.toDTOList(folderRepository.findByNameContainingIgnoreCase(name));
     }
 
-    public List<FolderDTO> findByUserIdAndActive(Long userId, Boolean active) {
-        return folderMapper.toDTOList(folderRepository.findByCreatedBy_IdAndActive(userId, active));
+    public List<FolderDTO> findByUserIdAndStatus(Integer userId, String status) {
+        return folderMapper.toDTOList(folderRepository.findByCreatedBy_IdAndStatus(userId, status));
     }
 
     public List<FolderDTO> findEmptyFolders() {
         return folderMapper.toDTOList(folderRepository.findEmptyFolders());
     }
 
-    public Long countDocumentsByFolderId(Long folderId) {
+    public Long countDocumentsByFolderId(Integer folderId) {
         return folderRepository.countDocumentsByFolderId(folderId);
     }
 
